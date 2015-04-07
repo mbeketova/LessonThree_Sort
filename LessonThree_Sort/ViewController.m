@@ -14,6 +14,7 @@
 @property NSArray * arrayValue;
 @property NSMutableArray * arrayM;
 
+
 @end
 
 @implementation ViewController
@@ -21,16 +22,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-//в задании необходимо вывести в таблицу значения stringValue и соответствующие им значения цен в stringPrice
+//в задании необходимо вывести в таблицу значения stringValue и соответствующие им значения цен в stringPrice + отсортировать данные по прайсу
+    
     NSString * stringValue = @"Куртка красная, Куртка синяя, Куртка зеленая, Куртка оранжевая, Куртка черная, Куртка белая";
     NSString * stringPrice = @"250, 300, 150, 117, 280, 218";
-    NSMutableArray * sortedArray;
+ 
     
     self.arrayM = [[NSMutableArray alloc]init];//инициализируем массив, куда будем записывать данные
     
     //заносим в массив значения из строки без символов запятая и пробел:
-    self.arrayPrice = [stringValue componentsSeparatedByString:@", "];
-    self.arrayValue = [stringPrice componentsSeparatedByString:@", "];
+    self.arrayPrice = [stringPrice componentsSeparatedByString:@", "];
+    self.arrayValue = [stringValue componentsSeparatedByString:@", "];
     
    
     //данный цикл записывает в коллекцию значения из массива arrayValue и соответствующие ему значения из массива arrayPrice, пока не закончатся элементы в массиве arrayPrice:
@@ -42,17 +44,15 @@
 
         
         
-        [sortedArray addObject:dict]; //записываем полученную запись из коллекции в массив
-
-
-    //здесь надо отсортировать коллекцию:
-        NSSortDescriptor * sorter = [[NSSortDescriptor alloc] initWithKey:@"price" ascending:YES];
-        NSArray * descriptors = [NSArray arrayWithObjects:sorter, nil];
-        NSArray * sorterArrayD = [sortedArray sortedArrayUsingDescriptors:descriptors];
-        [self.arrayM addObject:sorterArrayD];
+        [self.arrayM addObject:dict]; //записываем полученную запись из коллекции в массив
+   
         
         
     }
+     //здесь надо отсортировать коллекцию:
+    NSSortDescriptor * sorter = [[NSSortDescriptor alloc] initWithKey:@"price" ascending:YES];
+    NSArray * descriptors = [NSArray arrayWithObjects:sorter, nil];
+    [self.arrayM sortUsingDescriptors:descriptors];
     
 
     NSLog(@"%@",self.arrayM); //выводим на печать полученный массив с наименованиями и ценами
